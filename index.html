@@ -1,0 +1,152 @@
+
+    
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迷宮生成與求解器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        select, input {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .maze-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+       #maze {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 20px); /* 初始可這樣設，但會改 */
+    border: 2px solid #333;
+    background-color: white;
+}
+        
+        .cell {
+            width: 20px;
+            height: 20px;
+            box-sizing: border-box;
+        }
+        
+        .wall {
+            background-color: #333;
+        }
+        
+        .path {
+            background-color: white;
+        }
+        
+        .start {
+            background-color: #4CAF50;
+        }
+        
+        .end {
+            background-color: #f44336;
+        }
+        
+        .visited {
+            background-color: #add8e6;
+            animation: visit 0.3s ease-in-out;
+        }
+        
+        .solution {
+            background-color: #ffeb3b;
+            animation: solution 0.5s ease-in-out;
+        }
+        
+        .player {
+            background-color: #4CAF50;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.2s ease;
+        }
+        
+        @keyframes visit {
+            0% { background-color: white; }
+            100% { background-color: #add8e6; }
+        }
+        
+        @keyframes solution {
+            0% { background-color: #add8e6; }
+            100% { background-color: #ffeb3b; }
+        }
+        
+        .stats {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>迷宮生成與求解器</h1>
+    
+    <div class="controls">
+        <label for="width">寬度:</label>
+        <input type="number" id="width" min="5" max="50" value="20">
+        
+        <label for="height">高度:</label>
+        <input type="number" id="height" min="5" max="50" value="20">
+        
+        <select id="algorithm">
+            <option value="recursive">遞迴回溯</option>
+            <option value="prim">Prim's 算法</option>
+        </select>
+        
+        <button id="generate">生成迷宮</button>
+        <button id="solve-bfs">BFS 求解</button>
+        <button id="solve-dfs">DFS 求解</button>
+        <button id="play">手動玩</button>
+        <button id="reset">重置</button>
+    </div>
+    
+    <div class="maze-container">
+        <div id="maze"></div>
+        <div id="player" class="player" style="display: none;"></div>
+    </div>
+    
+    <div class="stats" id="stats"></div>
+    
+    <!-- 只載入 maze.js，其他 script 標籤刪除 -->
+    <script src="maze.js"></script>
+</body>
+</html>
